@@ -55,8 +55,6 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg) {
  * @param argv Character pointer array pointing to the passed arguments
  * @return 0 When the execution is successful
  */
-int main
-
 int main(int argc, char **argv) {
   /// Initialize ROS node
 

@@ -37,10 +37,11 @@
  * @brief A ROS subscriber
  * A ROS publisher created from ROS talker/publisher tutorials
  */
+#include <sstream>
+
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 
-#include <sstream>
 
 /**
  * @brief Main function implementation to publish to 'chatter' topic and 
