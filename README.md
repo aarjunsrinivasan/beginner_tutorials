@@ -7,11 +7,8 @@ An implementation of ROS subscriber publisher node using [ROS tutorial](http://w
 ## Pre-requisite
 The project requires ROS melodic and catkin, and is developed on UBUNTU 18.04 LTS.
 
-To install ROS please follow the tutorial on: 
-http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28c%2B%2B%29
+To install ROS please follow the tutorial [Link](http://wiki.ros.org/melodic/Installation/Ubuntu)
 
-To install catkin please follow the tutorial on: 
-http://wiki.ros.org/catkin?distro=indigo#Installing_catkin
 
 ## How to build
 Before building please ensure ROS melodic and catkin are installed.  
