@@ -41,6 +41,7 @@
 
 // %EndTag(MSG_HEADER)%
 #include <sstream>
+
 // %Tag(FULLTEXT)%
 // %Tag(ROS_HEADER)%
 #include "ros/ros.h"
@@ -52,7 +53,7 @@
 /**
  * The default string for output which can be modified by user
  */
-std::string defaultMessage = "Default Message ";
+extern std::string defaultMessage = "Default Message ";
 
 /**
  * @brief  Callback function for stringupdate Service
@@ -91,7 +92,7 @@ int main(int argc, char **argv) {
    */
 
     int loopFreq = 10;
-    if(argc == 2) {
+    if (argc == 2) {
         loopFreq = atoi(argv[1]);
     }
     ROS_DEBUG_STREAM("User Input Frequency is: " << loopFreq);
@@ -156,7 +157,10 @@ int main(int argc, char **argv) {
 
     std::stringstream ss;
     ss << defaultMessage << count;
+    // std::cout << defaultMessage << count;
     msg.data = ss.str();
+
+    // msg.data = str(defaultMessage);
 // %EndTag(FILL_MESSAGE)%
 
 // %Tag(ROSCONSOLE)%
