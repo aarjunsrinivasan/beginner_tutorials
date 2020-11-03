@@ -37,52 +37,153 @@
  * @brief A ROS subscriber
  * A ROS publisher created from ROS talker/publisher tutorials
  */
+
+
+// %EndTag(MSG_HEADER)%
 #include <sstream>
-
+// %Tag(FULLTEXT)%
+// %Tag(ROS_HEADER)%
 #include "ros/ros.h"
+// %EndTag(ROS_HEADER)%
+// %Tag(MSG_HEADER)%
 #include "std_msgs/String.h"
-
+#include "beginner_tutorials/stringupdate.h"
 
 /**
- * @brief Main function implementation to publish to 'chatter' topic and 
- * print the message
- * @param argc Number of parameters passed in command line
- * @param argv Character pointer array pointing to the passed arguments
- * @return 0 When the execution is successful
+ * The default string for output which can be modified by user
  */
+std::string defaultMessage = "Default Message ";
+
+/**
+ * @brief  Callback function for stringupdate Service
+ * @param  request   The request data sent to service
+ * @param  response   The response by the service to request
+ * @return bool
+ */
+bool modifyDefaultText(beginner_tutorials::stringupdate::Request& request,
+beginner_tutorials::stringupdate::Response& response) {
+    defaultMessage = request.newString;
+    response.updatedString = "The User modified default string to: " +
+    request.newString;
+    ROS_WARN_STREAM("User has changed the default message");
+    return true;
+}
+
 int main(int argc, char **argv) {
-  /// Initialize ROS node
+  /**
+   * The ros::init() function needs to see argc and argv so that it can perform
+   * any ROS arguments and name remapping that were provided at the command line.
+   * For programmatic remappings you can use a different version of init() which takes
+   * remappings directly, but for most command-line programs, passing argc and argv is
+   * the easiest way to do it.  The third argument to init() is the name of the node.
+   *
+   * You must call one of the versions of ros::init() before using any other
+   * part of the ROS system.
+   */
+// %Tag(INIT)%
   ros::init(argc, argv, "talker");
+// %EndTag(INIT)%
 
-  /// Create an instance of NodeHandle
+  /**
+   * NodeHandle is the main access point to communications with the ROS system.
+   * The first NodeHandle constructed will fully initialize this node, and the last
+   * NodeHandle destructed will close down the node.
+   */
+
+    int loopFreq = 10;
+    if(argc == 2) {
+        loopFreq = atoi(argv[1]);
+    }
+    ROS_DEBUG_STREAM("User Input Frequency is: " << loopFreq);
+    if (loopFreq < 0) {
+        ROS_ERROR_STREAM("The Input Frequency is negative");
+        ROS_WARN_STREAM("Setting Loop Frequency to default value of 10Hz");
+        loopFreq = 10;
+    }  else if (loopFreq == 0) {
+           ROS_FATAL_STREAM("Input Frequency set as 0 or a non-integer");
+           ROS_WARN_STREAM("Setting Loop Frequency to default value 10Hz");
+           loopFreq = 10;
+    }
+
+
+
+
+
+// %Tag(NODEHANDLE)%
   ros::NodeHandle n;
+// %EndTag(NODEHANDLE)%
 
-  // Create a pubisher node to publish 'chatter' topic
-  ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  /**
+   * The advertise() function is how you tell ROS that you want to
+   * publish on a given topic name. This invokes a call to the ROS
+   * master node, which keeps a registry of who is publishing and who
+   * is subscribing. After this advertise() call is made, the master
+   * node will notify anyone who is trying to subscribe to this topic name,
+   * and they will in turn negotiate a peer-to-peer connection with this
+   * node.  advertise() returns a Publisher object which allows you to
+   * publish messages on that topic through a call to publish().  Once
+   * all copies of the returned Publisher object are destroyed, the topic
+   * will be automatically unadvertised.
+   *
+   * The second parameter to advertise() is the size of the message queue
+   * used for publishing messages.  If messages are published more quickly
+   * than we can send them, the number here specifies how many messages to
+   * buffer up before throwing some away.
+   */
+// %Tag(PUBLISHER)%
+  auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+// %EndTag(PUBLISHER)%
 
-  ros::Rate loop_rate(10);
+  auto server = n.advertiseService("stringupdate", modifyDefaultText);
 
-  /// Initialize the count
+// %Tag(LOOP_RATE)%
+  ros::Rate loop_rate(loopFreq);
+// %EndTag(LOOP_RATE)%
+
+  /**
+   * A count of how many messages we have sent. This is used to create
+   * a unique string for each message.
+   */
+// %Tag(ROS_OK)%
   int count = 0;
   while (ros::ok()) {
-    /// Crate string message
+// %EndTag(ROS_OK)%
+    /**
+     * This is a message object. You stuff it with data, and then publish it.
+     */
+// %Tag(FILL_MESSAGE)%
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "Robots are awesome " << count;
+    ss << defaultMessage << count;
     msg.data = ss.str();
-    /// Display the message
+// %EndTag(FILL_MESSAGE)%
+
+// %Tag(ROSCONSOLE)%
     ROS_INFO("%s", msg.data.c_str());
+// %EndTag(ROSCONSOLE)%
 
-     /// Publish the message using publisher object
+    /**
+     * The publish() function is how you send messages. The parameter
+     * is the message object. The type of this object must agree with the type
+     * given as a template parameter to the advertise<>() call, as was done
+     * in the constructor above.
+     */
+// %Tag(PUBLISH)%
     chatter_pub.publish(msg);
-    /// Command to execute all pending callbacks from all nodes
-    ros::spinOnce();
+// %EndTag(PUBLISH)%
 
+// %Tag(SPINONCE)%
+    ros::spinOnce();
+// %EndTag(SPINONCE)%
+
+// %Tag(RATE_SLEEP)%
     loop_rate.sleep();
+// %EndTag(RATE_SLEEP)%
     ++count;
   }
 
 
   return 0;
 }
+// %EndTag(FULLTEXT)%
