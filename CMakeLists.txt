@@ -8,7 +8,7 @@ add_compile_options(-std=c++11)
 
 
 ## Find catkin and any catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg tf)
 
 ## Declare ROS messages and services
 add_service_files(FILES stringupdate.srv)
