@@ -40,11 +40,13 @@
 
 
 // %EndTag(MSG_HEADER)%
+#include <tf/transform_broadcaster.h>
 #include <sstream>
 
 // %Tag(FULLTEXT)%
 // %Tag(ROS_HEADER)%
 #include "ros/ros.h"
+
 // %EndTag(ROS_HEADER)%
 // %Tag(MSG_HEADER)%
 #include "std_msgs/String.h"
@@ -84,6 +86,10 @@ int main(int argc, char **argv) {
 // %Tag(INIT)%
   ros::init(argc, argv, "talker");
 // %EndTag(INIT)%
+
+  // tranform broadcaster object
+  static tf::TransformBroadcaster br;
+  tf::Transform transform;
 
   /**
    * NodeHandle is the main access point to communications with the ROS system.
@@ -135,6 +141,8 @@ int main(int argc, char **argv) {
   auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 // %EndTag(PUBLISHER)%
 
+
+
   auto server = n.advertiseService("stringupdate", modifyDefaultText);
 
 // %Tag(LOOP_RATE)%
@@ -176,6 +184,16 @@ int main(int argc, char **argv) {
 // %Tag(PUBLISH)%
     chatter_pub.publish(msg);
 // %EndTag(PUBLISH)%
+      // set translational element
+    transform.setOrigin(tf::Vector3(sin(ros::Time::now().toSec()),
+    cos(ros::Time::now().toSec()), 0.0));
+    tf::Quaternion q;
+    q.setRPY(0, 0, 1);
+    // set rotational element
+    transform.setRotation(q);
+    // broadcast the transform
+    br.sendTransform(tf::StampedTransform(transform,
+    ros::Time::now(), "world", "talk"));
 
 // %Tag(SPINONCE)%
     ros::spinOnce();
