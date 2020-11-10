@@ -81,7 +81,7 @@ rosservice call /stringupdate ENPM808X
 ## Change Loop frequency
 To modify the loop frequency open run the demo using launch file using the following command
 ```
-roslaunch beginner_tutorials hw9.launch frequency:=<int value greater than 0>
+roslaunch beginner_tutorials hw10.launch frequency:=<int value greater than 0>
 ```
 
 an example would be
