@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
 
     int loopFreq = 10;
     if (argc == 2) {
-        loopFreq = atoi(argv[1]);
+        loopFreq = std::stoi(argv[1]);
     }
     ROS_DEBUG_STREAM("User Input Frequency is: " << loopFreq);
     if (loopFreq < 0) {
@@ -164,7 +164,7 @@ int main(int argc, char **argv) {
 // %EndTag(FILL_MESSAGE)%
 
 // %Tag(ROSCONSOLE)%
-    ROS_INFO("%s", msg.data.c_str());
+    ROS_INFO_STREAM("" << msg.data.c_str());
 // %EndTag(ROSCONSOLE)%
 
     /**
