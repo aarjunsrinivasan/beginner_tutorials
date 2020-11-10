@@ -66,8 +66,7 @@ extern std::string defaultMessage = "Default Message ";
 bool modifyDefaultText(beginner_tutorials::stringupdate::Request& request,
 beginner_tutorials::stringupdate::Response& response) {
     defaultMessage = request.newString;
-    response.updatedString = "The User modified default string to: " +
-    request.newString;
+    response.updatedString = request.newString;
     ROS_WARN_STREAM("User has changed the default message");
     return true;
 }
