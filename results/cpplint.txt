@@ -1,6 +1,8 @@
-(base) arjun@arjun-Legion-Y545-PG0:~/catkin_ws/src/beginner_tutorials$ cpplint $( find . -name \*.hpp -or -name \*.cpp | grep -vE -e "^./build/" -e "^./vendor/" -e "^./data" )
+arjun@arjun-Legion-Y545-PG0:~/catkin_ws/src/arjun/beginner_tutorials$ cpplint $( find . -name \*.hpp -or -name \*.cpp | grep -vE -e "^./build/" -e "^./vendor/" -e "^./data" )
 Done processing ./src/listener.cpp
-./src/talker.cpp:64:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::stringupdate::Request& request  [runtime/references] [2]
-./src/talker.cpp:65:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::stringupdate::Response& response  [runtime/references] [2]
+./src/talker.cpp:66:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::stringupdate::Request& request  [runtime/references] [2]
+./src/talker.cpp:67:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::stringupdate::Response& response  [runtime/references] [2]
 Done processing ./src/talker.cpp
+Done processing ./test/main.cpp
+Done processing ./test/talkerTest.cpp
 Total errors found: 2
