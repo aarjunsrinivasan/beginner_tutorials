@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 # ENPM808X - ROS Services, Logging ,ROSTEST, TF and ROSBAG ,and Launch files .
-
-=======
-# ENPM808X - ROS Services, Logging and Launch files .
->>>>>>> be5406db15055aa9567787e219eaf48e47cd6b4c
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/aarjunsrinivasan/beginner_tutorials/blob/master/LICENSE)
 ---
 
