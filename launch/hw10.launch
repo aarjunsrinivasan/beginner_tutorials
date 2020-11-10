@@ -25,7 +25,7 @@
         pkg="rosbag"
         name="record"
         type="record"
-        args="-duration=15 -a -O (find beginner_tutorials)/results/recordtopics.bag "
+        args="--duration=15 -a -O $(find beginner_tutorials)/results/recordtopics.bag "
         if="$(arg rosbagEnable)"
     />
 </launch>
